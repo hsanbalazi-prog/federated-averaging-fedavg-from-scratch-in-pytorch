@@ -55,24 +55,16 @@ def train_test_split_dataset(features, labels, test_fraction, seed):
 # Step 4 - partition_data_iid
 import torch
 
-def train_test_split_dataset(features, labels, test_ratio=0.2, seed=42):
-        num_rows = features.shape[0]
+def partition_data_iid(features, labels, num_clients, seed):
+    num_rows = features.shape[0]
+    num_clients = max(1, num_clients)
 
-    generator = torch.Generator()
-    generator.manual_seed(seed)
-
+    generator = torch.Generator().manual_seed(seed)
     perm = torch.randperm(num_rows, generator=generator)
 
-    num_test = int(num_rows * test_ratio)
-    test_idx = perm[:num_test]
-    train_idx = perm[num_test:]
+    index_groups = torch.tensor_split(perm, num_clients)
 
-    train_features = features[train_idx]
-    train_labels = labels[train_idx]
-    test_features = features[test_idx]
-    test_labels = labels[test_idx]
-
-     return train_features, train_labels, test_features, test_labels
+    return [(features[idx], labels[idx]) for idx in index_groups]
 
 # Step 5 - partition_data_non_iid
 import torch
