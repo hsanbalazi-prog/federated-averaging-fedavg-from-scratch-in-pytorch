@@ -87,8 +87,9 @@ def partition_data_non_iid(features, labels, num_clients, shards_per_client, see
 
     return partitions
 
-# Step 6 - count_client_samples (not yet solved)
-# TODO: implement
+# Step 6 - count_client_samples
+def count_client_samples(client_partitions):
+    return [len(client_labels) for client_features, client_labels in client_partitions]
 
 # Step 7 - iterate_client_batches (not yet solved)
 # TODO: implement
