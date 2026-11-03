@@ -142,8 +142,10 @@ def train_client_local(model, client_features, client_labels,
 
     return model.state_dict()
 
-# Step 11 - clone_model_state (not yet solved)
-# TODO: implement
+# Step 11 - clone_model_state
+def clone_model_state(model):
+    return {name: tensor.detach().clone()
+            for name, tensor in model.state_dict().items()}
 
 # Step 12 - load_model_state (not yet solved)
 # TODO: implement
