@@ -147,8 +147,10 @@ def clone_model_state(model):
     return {name: tensor.detach().clone()
             for name, tensor in model.state_dict().items()}
 
-# Step 12 - load_model_state (not yet solved)
-# TODO: implement
+# Step 12 - load_model_state
+def load_model_state(model, state_dict):
+    model.load_state_dict(state_dict)
+    return model
 
 # Step 13 - initialize_global_state (not yet solved)
 # TODO: implement
