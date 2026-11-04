@@ -152,8 +152,13 @@ def load_model_state(model, state_dict):
     model.load_state_dict(state_dict)
     return model
 
-# Step 13 - initialize_global_state (not yet solved)
-# TODO: implement
+# Step 13 - initialize_global_state
+import torch
+
+def initialize_global_state(input_size, hidden_size, num_classes, seed):
+    torch.manual_seed(seed)
+    model = build_mlp_classifier(input_size, hidden_size, num_classes)
+    return clone_model_state(model)
 
 # Step 14 - add_state_dicts (not yet solved)
 # TODO: implement
