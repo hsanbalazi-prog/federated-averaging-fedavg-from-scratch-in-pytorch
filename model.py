@@ -164,8 +164,9 @@ def initialize_global_state(input_size, hidden_size, num_classes, seed):
 def add_state_dicts(state_a, state_b):
     return {key: state_a[key] + state_b[key] for key in state_a}
 
-# Step 15 - scale_state_dict (not yet solved)
-# TODO: implement
+# Step 15 - scale_state_dict
+def scale_state_dict(state_dict, weight):
+    return {key: tensor * weight for key, tensor in state_dict.items()}
 
 # Step 16 - aggregate_weighted_average (not yet solved)
 # TODO: implement
