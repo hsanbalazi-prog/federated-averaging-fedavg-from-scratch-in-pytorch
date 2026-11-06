@@ -178,8 +178,14 @@ def aggregate_weighted_average(client_states, client_sample_counts):
 
     return aggregated
 
-# Step 17 - select_round_clients (not yet solved)
-# TODO: implement
+# Step 17 - select_round_clients
+import numpy as np
+
+def select_round_clients(num_clients, client_fraction, seed):
+    m = max(1, round(client_fraction * num_clients))
+    rng = np.random.default_rng(seed)
+    chosen = rng.choice(num_clients, size=m, replace=False)
+    return sorted(int(i) for i in chosen)
 
 # Step 18 - run_communication_round (not yet solved)
 # TODO: implement
