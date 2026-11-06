@@ -187,8 +187,32 @@ def select_round_clients(num_clients, client_fraction, seed):
     chosen = rng.choice(num_clients, size=m, replace=False)
     return sorted(int(i) for i in chosen)
 
-# Step 18 - run_communication_round (not yet solved)
-# TODO: implement
+# Step 18 - run_communication_round
+def run_communication_round(global_state, client_partitions, selected_clients,
+                            model_config, local_epochs, batch_size,
+                            learning_rate, seed):
+    client_states = []
+    client_counts = []
+
+    for client_idx in selected_clients:
+        client_features, client_labels = client_partitions[client_idx]
+
+        model = build_mlp_classifier(
+            model_config['input_size'],
+            model_config['hidden_size'],
+            model_config['num_classes'],
+        )
+        load_model_state(model, global_state)
+
+        state = train_client_local(
+            model, client_features, client_labels,
+            local_epochs, batch_size, learning_rate, seed + client_idx
+        )
+
+        client_states.append(state)
+        client_counts.append(client_features.shape[0])
+
+    return aggregate_weighted_average(client_states, client_counts)
 
 # Step 19 - evaluate_accuracy (not yet solved)
 # TODO: implement
