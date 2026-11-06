@@ -168,8 +168,15 @@ def add_state_dicts(state_a, state_b):
 def scale_state_dict(state_dict, weight):
     return {key: tensor * weight for key, tensor in state_dict.items()}
 
-# Step 16 - aggregate_weighted_average (not yet solved)
-# TODO: implement
+# Step 16 - aggregate_weighted_average
+def aggregate_weighted_average(client_states, client_sample_counts):
+    total = sum(client_sample_counts)
+
+    aggregated = scale_state_dict(client_states[0], client_sample_counts[0] / total)
+    for state, count in zip(client_states[1:], client_sample_counts[1:]):
+        aggregated = add_state_dicts(aggregated, scale_state_dict(state, count / total))
+
+    return aggregated
 
 # Step 17 - select_round_clients (not yet solved)
 # TODO: implement
